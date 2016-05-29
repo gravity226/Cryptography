@@ -4,12 +4,14 @@
 This is a simple encryption technique where you shift every letter in a document by n spaces.  
 
 ### Contents
- - [Encryption]()
- - [Frequency]()
+ - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#encryption)
+ - [Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#frequency)
  - Decryption
 
-#### Encryption
+##### Encryption
 ``` python
+import string
+
 def encrypt(s, key):
     uppers = string.uppercase[:26]
     s1 = ''
@@ -20,3 +22,16 @@ def encrypt(s, key):
             new_key = uppers.index(l) + key if uppers.index(l) + key < len(uppers) else uppers.index(l) + key - len(uppers)
             s1 += uppers[new_key]
     return s1
+```
+
+##### Frequency
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+def frequency(s):
+    f = np.array( [[s.count(l), l] for l in set(s)] )
+    plt.bar(np.arange(len(f))[1:], map(int, f[:,0].tolist())[1:], .4)
+    plt.xticks(np.arange(len(f))[1:], f[:,1].tolist()[1:])
+    plt.show()
+```
