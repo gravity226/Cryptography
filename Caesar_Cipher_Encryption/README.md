@@ -25,6 +25,7 @@ def encrypt(s, key):
 ```
 
 ##### Frequency
+One technique for decrypting a document is to look at the frequency of the letters used.
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
