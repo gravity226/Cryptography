@@ -6,6 +6,7 @@ This is a simple encryption technique where you shift every letter in a document
 ### Contents
  - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#encryption)
  - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-frequency)
+ - Word Frequency
  - Decryption
 
 ##### Encryption
@@ -41,3 +42,23 @@ def frequency(s):
 <br />
 <br />
 <img src="https://github.com/gravity226/Cryptography/blob/master/Caesar_Cipher_Encryption/imgs/encrypted_message.png" height="400" />
+
+##### Word Frequency
+What about the word frequency?  Some words are naturally used more than others.
+``` python
+import matplotlib.pyplot as plt
+import numpy as np
+
+def word_frequency(s):
+    words = s.split()
+    f = np.array( sorted([[words.count(w), w] for w in set(words)], key=lambda w: w[1]) )
+
+    plt.bar(np.arange(len(f))[1:], map(int, f[:,0].tolist())[1:], .4, color='y')
+    plt.xticks(np.arange(len(f))[1:], f[:,1].tolist()[1:], rotation=45)
+    plt.show()
+```
+<br />
+<img src="https://github.com/gravity226/Cryptography/blob/master/Caesar_Cipher_Encryption/imgs/wf_original.png" height="400" />
+<br />
+<br />
+<img src="https://github.com/gravity226/Cryptography/blob/master/Caesar_Cipher_Encryption/imgs/wf_encrypted.png" height="400" />
