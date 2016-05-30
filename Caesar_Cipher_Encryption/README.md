@@ -6,7 +6,7 @@ This is a simple encryption technique where you shift every letter in a document
 ### Contents
  - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#encryption)
  - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-frequency)
- - Word Frequency
+ - [Word Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#word-frequency)
  - Decryption
 
 ##### Encryption
