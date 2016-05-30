@@ -5,7 +5,7 @@ This is a simple encryption technique where you shift every letter in a document
 
 ### Contents
  - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#encryption)
- - [Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#frequency)
+ - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-frequency)
  - Decryption
 
 ##### Encryption
@@ -24,14 +24,14 @@ def encrypt(s, key):
     return s1
 ```
 
-##### Frequency
+##### Letter Frequency
 One technique for decrypting a document is to look at the frequency of the letters used.
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
 
 def frequency(s):
-    f = np.array( [[s.count(l), l] for l in set(s)] )
+    f = np.array( sorted([[s.count(l), l] for l in set(s)], key=lambda z: z[1]) )
     plt.bar(np.arange(len(f))[1:], map(int, f[:,0].tolist())[1:], .4)
     plt.xticks(np.arange(len(f))[1:], f[:,1].tolist()[1:])
     plt.show()
