@@ -37,7 +37,7 @@ def frequency(s):
     plt.show()
 ```
 <br />
-<img src="https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption/imgs/original_message.png" />
+<img src="https://github.com/gravity226/Cryptography/Caesar_Cipher_Encryption/imgs/original_message.png" />
 <br />
 <br />
-<img src="https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption/imgs/encrypted_message.png" />
+<img src="https://github.com/gravity226/Cryptography/Caesar_Cipher_Encryption/imgs/encrypted_message.png" />
