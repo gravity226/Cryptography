@@ -36,3 +36,8 @@ def frequency(s):
     plt.xticks(np.arange(len(f))[1:], f[:,1].tolist()[1:])
     plt.show()
 ```
+<br />
+<img src="https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption/img/original_message.png" />
+<br />
+<br />
+<img src="https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption/img/encrypted_message.png" />
