@@ -13,6 +13,7 @@ This is a simple encryption technique where you shift every letter in a document
  - [Top 5000 Words](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#top-5000-words)
  - [Modeling](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#modeling)
  - [Decryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption)
+ - [Decryption II (The Decryptoning)](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption-ii-the-decryptoning)
 
 ##### Encryption
 ``` python
@@ -269,3 +270,119 @@ So this method decrypts this particular sentence perfectly.  I am still not sati
 
 
 ##### Decryption II (The Decryptoning)
+For this one I am going to change up the data that is fed into the model.  Instead of just feeding in the total distance of a word I am array of distances to account for the space between each word.  
+
+New Distances
+```python
+def dist_breakdown(w):
+    letters = dict(zip(string.uppercase[:26], range(1,27)) +
+                   zip(string.lowercase[:26], range(1,27)) + [["'", 27], ['-', 28], ['/', 29]])
+
+    if len(w) == 1:
+        return [letters[w]]
+    else:
+        count = []
+        for x in xrange(len(w) - 1):
+            if x == "'":
+                count.append(0)
+            elif letters[w[x]] > letters[w[x+1]]:
+                count.append((26 - letters[w[x]]) + letters[w[x+1]])
+            else:
+                count.append(abs(letters[w[x]] - letters[w[x+1]]))
+        return count
+
+def shape_data(w):
+    a = dist_breakdown(w)
+    l = [len(w)]
+    needed = [ 0 for zero in xrange(16 - len(a)) ]
+
+    return l + a + needed
+
+# for this you only have to call the shape_date() method with each word
+```
+
+Next we need to retrain the model with the new data.
+```python
+def km_clusters():
+    df = top_5000()
+    model = KMeans(n_clusters=5000)
+    X = df.Word.map(shape_data).values
+    model.fit_transform(list(X))
+    joblib.dump(model, 'kmeans_16d_model.pkl')
+```
+
+Now we can try our naive approach again.
+```python
+def naive_predictions():
+    # get model
+    model = joblib.load('kmeans_16d_model.pkl')
+    labels = list(model.labels_)
+
+    # to encrypt
+    s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    encrypted_s = encrypt(s, 3)
+
+    words = [ shape_data(word) for word in encrypted_s.split() ]
+    preds = model.predict(words)
+
+    predicted_sentence = [ df.Word.ix[labels.index(n)] for n in preds ]
+
+    print "Original Sentence"
+    print s.split()
+    print
+    print "Decrypted sentence with KMeans"
+    print predicted_sentence
+```
+```output
+Original Sentence
+['THE', 'QUICK', 'BROWN', 'FOX', 'JUMPS', 'OVER', 'THE', 'LAZY', 'DOG']
+
+Decrypted sentence with KMeans
+['the', 'quick', 'brown', 'air', 'humor', 'over', 'the', 'shed', 'dog']
+```
+
+<i>Results</i><br />
+For this one I'm getting a much better baseline accuracy of about %66 on this sentence.
+
+Let's try the "find the key" approach again with a little different approach.  This time I will cycle through the words to see if I can find an exact distance match and then assume that I have found the key.  
+```python
+def key_predictions(df):
+    from Caesar_Cipher_Encryption.c_cipher import encrypt
+
+    # get model
+    model = joblib.load('kmeans_16d_model.pkl')
+    labels = list(model.labels_)
+
+    # to encrypt
+    s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    encrypted_s = encrypt(s, 3)
+
+    # get words frequencies
+    words = encrypted_s.split()
+    frequencies = np.array( sorted([[words.count(w), w] for w in set(words)], key=lambda w: w[1], reverse=True) )
+
+    # predict the word with the highest frequency
+    count = 0
+    for word in words:
+        pred = model.predict([shape_data(word)])
+        predicted_word = df.Word.ix[labels.index(pred)]
+        if dist_breakdown(word) == dist_breakdown(predicted_word):
+            key = dist(word[0]+predicted_word[0])
+            break
+        else:
+            count += 1
+
+    if count < len(words):
+        print encrypt(encrypted_s, key)
+    else:
+        print "No guess here..."
+```
+```output
+THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+```
+
+<i>Results</i><br />
+Again I get a perfect decryption with the particular sentence.  I will need to do more testing to see if it works on other data sets though.  
+
+##### Summary
+The best model I've made so far is my kmeans_16d_model.pkl model with the key_predictions() method.  My next step here is to try different encrypted documents and maybe find ways to improve on my existing approach.  
