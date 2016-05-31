@@ -1,4 +1,5 @@
 # Caesar Cipher
+With Python 2.7
 
 ### Summary
 This is a simple encryption technique where you shift every letter in a document by n spaces.  
@@ -9,6 +10,8 @@ This is a simple encryption technique where you shift every letter in a document
  - [Word Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#word-frequency)
  - [Letter Distance](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-distance)
  - [Check Distance](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#check-distance)
+ - [Top 5000 Words](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#top-5000-words)
+ - [Modeling](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#modeling)
  - [Decryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption)
 
 ##### Encryption
@@ -119,7 +122,7 @@ def check_dist():
     print map(dist, encrypted_s.split())
 ```
 ```output
-Top ten words on my list of ranked words.
+Top ten words used in the English language.
 Original:
 ['the', 'be', 'and', 'of', 'a', 'in', 'to', 'have', 'to', 'it']
 [37, 3, 29, 17, 1, 5, 21, 49, 21, 11]
@@ -131,4 +134,50 @@ Encrypted:
 
 <i>Results</i><br />
 As expected the distance algorithm works really well except when we look at one letter words.
+
+##### Top 5000 Words
+So in order to decrypt a document I need a group of words to build my model on.  I got a copy of the 5000 most used words in the English language from [www.wordfrequency.info](http://www.wordfrequency.info).  Thanks to them I am able to test my ideas on decryption.
+
+```python
+import pandas as pd
+
+df = pd.read_csv('word_frequency.csv')
+df.columns = [ col.strip().replace(' ', '_') for col in df.columns ]
+# columns = [u'Rank', u'Word', u'Part_of_speech', u'Frequency', u'Dispersion']
+
+# let's do a little cleaning
+df.Rank = df.Rank.map(int)
+df.Word = df.Word.apply(lambda w: w.strip())
+df.Part_of_speech = df.Part_of_speech.apply(lambda w: w.strip())
+df.Rank = df.Rank.map(int)
+df.Frequency = df.Frequency.map(int)
+df.Frequency = df.Frequency.map(float)
+
+# and finally a little feature engineering
+df['Counts'] = df.Word.apply(lambda w: len(w))
+df['Distance'] = df.Word.map(dist)
+
+print df.head(10)
+```
+```ouput
+   Rank  Word Part_of_speech  Frequency  Dispersion  Counts  Distance
+0     1   the              a   22038615        0.98       3        37
+1     2    be              v   12545825        0.97       2         3
+2     3   and              c   10741073        0.99       3        29
+3     4    of              i   10343885        0.97       2        17
+4     5     a              a   10144200        0.98       1         1
+5     6    in              i    6996437        0.98       2         5
+6     7    to              t    6332195        0.98       2        21
+7     8  have              v    4303955        0.97       4        49
+8     9    to              i    3856916        0.99       2        21
+9    10    it              p    3872477        0.96       2        11
+```
+
+##### Modeling
+So we now know a couple important things about a word, whether it's encrypted or not.  First we have a universal distance metric that works for anything except one letter words.  Second we also know how many letters are in each word.  Based on this I had the idea to use a clustering algorithm to group words based on their given distance and number of letters.  A simple clustering algorithm to use and implement is SKLearn's KMeans.
+
+```python
+
+```
+
 ##### Decryption
