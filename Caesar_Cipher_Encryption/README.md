@@ -266,3 +266,6 @@ def more_naive_predictions(df):
 
 <i>Results</i><br />
 So this method decrypts this particular sentence perfectly.  I am still not satisfied though.  This method assumes that the word with the highest frequency will be decrypted correctly.  This would be a problem in real life as not everything is this cut and dry.  So lets try to take this a couple steps further.  
+
+
+##### Decryption II (The Decryptoning)
