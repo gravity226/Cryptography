@@ -12,7 +12,7 @@ def dist(w):
     if len(w) == 1:
         return letters[w]
     else:
-        count = 0
+        count = []
         for x in xrange(len(w) - 1):
             if x == "'":
                 count += 0
@@ -20,6 +20,23 @@ def dist(w):
                 count += (26 - letters[w[x]]) + letters[w[x+1]]
             else:
                 count +=  abs(letters[w[x]] - letters[w[x+1]])
+        return count
+
+def dist_breakdown(w):
+    letters = dict(zip(string.uppercase[:26], range(1,27)) +
+                   zip(string.lowercase[:26], range(1,27)) + [["'", 27], ['-', 28], ['/', 29]])
+
+    if len(w) == 1:
+        return letters[w]
+    else:
+        count = []
+        for x in xrange(len(w) - 1):
+            if x == "'":
+                count.append(0)
+            elif letters[w[x]] > letters[w[x+1]]:
+                count.append((26 - letters[w[x]]) + letters[w[x+1]])
+            else:
+                count.append(abs(letters[w[x]] - letters[w[x+1]]))
         return count
 
 def check_dist():
@@ -100,6 +117,30 @@ def naive_predictions(df):
     print
     print "Decrypted sentence with KMeans"
     print predicted_sentence
+
+def more_naive_predictions(df):
+    from Caesar_Cipher_Encryption.c_cipher import encrypt
+
+    # get model
+    model = joblib.load('kmeans_model.pkl')
+    labels = list(model.labels_)
+
+    # to encrypt
+    s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    encrypted_s = encrypt(s, 3)
+
+    # get words frequencies
+    words = encrypted_s.split()
+    frequencies = np.array( sorted([[words.count(w), w] for w in set(words)], key=lambda w: w[1], reverse=True) )
+
+    # predict the word with the highest frequency
+    word = frequencies[0][1]
+    pred = model.predict([[len(word), dist(word)]])
+    predicted_word = df.Word.ix[labels.index(pred)]
+    # if dist_breakdown(word) == dist_breakdown(predicted_word):
+    key = dist(word[0]+predicted_word[0])
+
+    print encrypt(encrypted_s, key)
 
 
 

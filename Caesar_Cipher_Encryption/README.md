@@ -208,8 +208,6 @@ from sklearn.cluster import KMeans
 from sklearn.externals import joblib
 
 def naive_predictions(df):
-    from Caesar_Cipher_Encryption.c_cipher import encrypt
-
     model = joblib.load('kmeans_model.pkl')
     labels = list(model.labels_)
 
@@ -217,6 +215,7 @@ def naive_predictions(df):
     s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
     encrypted_s = encrypt(s, 3)
 
+    # to decrypt
     words = [ [len(word), dist(word)] for word in encrypted_s.split() ]
     preds = model.predict(words)
 
@@ -227,7 +226,6 @@ def naive_predictions(df):
     print
     print "Decrypted sentence with KMeans"
     print predicted_sentence
-
 ```
 ```output
 Original Sentence
@@ -241,5 +239,30 @@ Decrypted sentence with KMeans
 So my first attempt wasn't great.  I'm getting about %22 accuracy on this particular sentence.  But I can improve on this.  For my next attempt I will incorporate the word frequency algorithm I made earlier.  Let's try this again.
 
 ```python
+import numpy as np
 
+def more_naive_predictions(df):
+    # get model
+    model = joblib.load('kmeans_model.pkl')
+    labels = list(model.labels_)
+
+    # to encrypt
+    s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    encrypted_s = encrypt(s, 3)
+
+    # get words frequencies
+    words = encrypted_s.split()
+    frequencies = np.array( sorted([[words.count(w), w] for w in set(words)], key=lambda w: w[1], reverse=True) )
+
+    # predict the word with the highest frequency
+    word = frequencies[0][1]
+    pred = model.predict([[len(word), dist(word)]])
+    predicted_word = df.Word.ix[labels.index(pred)]
+    key = dist(word[0]+predicted_word[0])
+
+    # use the same encryption method to decrypt it
+    print encrypt(encrypted_s, key)
 ```
+
+<i>Results</i><br />
+So this method decrypts this particular sentence perfectly.  I am still not satisfied though.  This method assumes that the word with the highest frequency will be decrypted correctly.  This would be a problem in real life as not everything is this cut and dry.  So lets try to take this a couple steps further.  
