@@ -14,6 +14,7 @@ This is a simple encryption technique where you shift every letter in a document
  - [Modeling](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#modeling)
  - [Decryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption)
  - [Decryption II (The Decryptoning)](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption-ii-the-decryptoning)
+ - [Summary](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#summary)
 
 ##### Encryption
 ``` python
@@ -270,7 +271,7 @@ So this method decrypts this particular sentence perfectly.  I am still not sati
 
 
 ##### Decryption II (The Decryptoning)
-For this one I am going to change up the data that is fed into the model.  Instead of just feeding in the total distance of a word I am array of distances to account for the space between each word.  
+For this one I am going to change up the data that is fed into the model.  Instead of just feeding in the total distance of a word I am adding an array of distances to account for the space between each word.  
 
 New Distances
 ```python
