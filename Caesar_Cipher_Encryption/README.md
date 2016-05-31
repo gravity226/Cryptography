@@ -14,7 +14,7 @@ This is a simple encryption technique where you shift every letter in a document
  - [Modeling](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#modeling)
  - [Decryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption)
  - [Decryption II (The Decryptoning)](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption-ii-the-decryptoning)
- - [Summary](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#summary)
+ - [Conclusion](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#conclusion)
 
 ##### Encryption
 ``` python
@@ -385,5 +385,5 @@ THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
 <i>Results</i><br />
 Again I get a perfect decryption with the particular sentence.  I will need to do more testing to see if it works on other data sets though.  
 
-##### Summary
+##### Conclusion
 The best model I've made so far is my kmeans_16d_model.pkl model with the key_predictions() method.  My next step here is to try different encrypted documents and maybe find ways to improve on my existing approach.  
