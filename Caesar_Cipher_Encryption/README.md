@@ -8,6 +8,7 @@ This is a simple encryption technique where you shift every letter in a document
  - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-frequency)
  - [Word Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#word-frequency)
  - [Letter Distance](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-distance)
+ - [Check Distance](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#check-distance)
  - [Decryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption)
 
 ##### Encryption
@@ -95,4 +96,39 @@ def dist(w):
         return count
 ```
 
+##### Check Distance
+Let's make sure that the distance lines up with my words and their encrypted versions.
+
+```python
+def check_dist():
+    # top 10 words used in the English language
+    top_10 = ['the', 'be', 'and', 'of', 'a', 'in', 'to', 'have', 'to', 'it']
+
+    sentence = reduce(lambda x, y: x + ' ' + y,top_10) # need to input a sentence to this algorithm
+
+    # Using the encrypt() method we created above
+    encrypted_s = encrypt(sentence.upper(), 3)
+
+    print "Top ten words on my list of ranked words."
+    print "Original:"
+    print top_10
+    print map(dist, top_10) # use the dist() method we created above
+    print
+    print "Encrypted:"
+    print encrypted_s.split()
+    print map(dist, encrypted_s.split())
+```
+```output
+Top ten words on my list of ranked words.
+Original:
+['the', 'be', 'and', 'of', 'a', 'in', 'to', 'have', 'to', 'it']
+[37, 3, 29, 17, 1, 5, 21, 49, 21, 11]
+
+Encrypted:
+['WKH', 'EH', 'DQG', 'RI', 'D', 'LQ', 'WR', 'KDYH', 'WR', 'LW']
+[37, 3, 29, 17, 4, 5, 21, 49, 21, 11]
+```
+
+<i>Results</i><br />
+As expected the distance algorithm works really well except when we look at one letter words.
 ##### Decryption
