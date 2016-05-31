@@ -141,23 +141,26 @@ So in order to decrypt a document I need a group of words to build my model on. 
 ```python
 import pandas as pd
 
-df = pd.read_csv('word_frequency.csv')
-df.columns = [ col.strip().replace(' ', '_') for col in df.columns ]
-# columns = [u'Rank', u'Word', u'Part_of_speech', u'Frequency', u'Dispersion']
+def top_5000():
+    df = pd.read_csv('word_frequency.csv')
+    df.columns = [ col.strip().replace(' ', '_') for col in df.columns ]
+    # columns = [u'Rank', u'Word', u'Part_of_speech', u'Frequency', u'Dispersion']
 
-# let's do a little cleaning
-df.Rank = df.Rank.map(int)
-df.Word = df.Word.apply(lambda w: w.strip())
-df.Part_of_speech = df.Part_of_speech.apply(lambda w: w.strip())
-df.Rank = df.Rank.map(int)
-df.Frequency = df.Frequency.map(int)
-df.Frequency = df.Frequency.map(float)
+    # let's do a little cleaning
+    df.Rank = df.Rank.map(int)
+    df.Word = df.Word.apply(lambda w: w.strip())
+    df.Part_of_speech = df.Part_of_speech.apply(lambda w: w.strip())
+    df.Rank = df.Rank.map(int)
+    df.Frequency = df.Frequency.map(int)
+    df.Frequency = df.Frequency.map(float)
 
-# and finally a little feature engineering
-df['Counts'] = df.Word.apply(lambda w: len(w))
-df['Distance'] = df.Word.map(dist)
+    # and finally a little feature engineering
+    df['Counts'] = df.Word.apply(lambda w: len(w))
+    df['Distance'] = df.Word.map(dist)
 
-print df.head(10)
+    print df.head(10)
+
+    return df
 ```
 ```ouput
    Rank  Word Part_of_speech  Frequency  Dispersion  Counts  Distance
@@ -177,7 +180,23 @@ print df.head(10)
 So we now know a couple important things about a word, whether it's encrypted or not.  First we have a universal distance metric that works for anything except one letter words.  Second we also know how many letters are in each word.  Based on this I had the idea to use a clustering algorithm to group words based on their given distance and number of letters.  A simple clustering algorithm to use and implement is SKLearn's KMeans.
 
 ```python
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.externals import joblib
+import pickle
 
+def km_clusters():
+    # grab the data
+    df = top_5000()
+    X = df[['Counts', 'Distance']].values
+
+    # create the model
+    # notice that I'm really overfitting the model here
+    model = KMeans(n_clusters=5000)
+    model.fit_transform(X)
+
+    # save the model so that I only have to run this once
+    joblib.dump(model, 'kmeans_model.pkl')
 ```
 
 ##### Decryption

@@ -52,7 +52,29 @@ def check_dist():
     will appear to be the same to the algorithm I'm about to write.
     '''
 
-def km_clusters(df):
+def top_5000():
+    df = pd.read_csv('word_frequency.csv')
+    df.columns = [ col.strip().replace(' ', '_') for col in df.columns ]
+    # columns = [u'Rank', u'Word', u'Part_of_speech', u'Frequency', u'Dispersion']
+
+    # let's do a little cleaning
+    df.Rank = df.Rank.map(int)
+    df.Word = df.Word.apply(lambda w: w.strip())
+    df.Part_of_speech = df.Part_of_speech.apply(lambda w: w.strip())
+    df.Rank = df.Rank.map(int)
+    df.Frequency = df.Frequency.map(int)
+    df.Frequency = df.Frequency.map(float)
+
+    # and finally a little feature engineering
+    df['Counts'] = df.Word.apply(lambda w: len(w))
+    df['Distance'] = df.Word.map(dist)
+
+    print df.head(10)
+
+    return df
+
+def km_clusters():
+    df = top_5000()
     model = KMeans(n_clusters=5000)
     X = df[['Counts', 'Distance']].values
     model.fit_transform(X)
