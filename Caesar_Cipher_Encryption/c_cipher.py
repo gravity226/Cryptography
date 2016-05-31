@@ -4,6 +4,7 @@ import numpy as np
 
 # ------  Encrypt with the Caesar Cipher  ------
 
+# input s is a sentence, one string. ex: s = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"
 def encrypt(s, key):
     uppers = string.uppercase[:26]
     s1 = ''

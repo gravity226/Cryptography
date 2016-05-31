@@ -7,7 +7,8 @@ This is a simple encryption technique where you shift every letter in a document
  - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#encryption)
  - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-frequency)
  - [Word Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#word-frequency)
- - Decryption
+ - [Letter Distance](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-distance)
+ - [Decryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#decryption)
 
 ##### Encryption
 ``` python
@@ -62,3 +63,36 @@ def word_frequency(s):
 <br />
 <br />
 <img src="https://github.com/gravity226/Cryptography/blob/master/Caesar_Cipher_Encryption/imgs/wf_encrypted.png" height="400" />
+
+##### Letter Distance
+In order to decrypt this I had the idea to create a distance metric for every word.  This metric would look at the distance between letters in a word.  When you think about it, the distance between letters in a word would be the same whether that word is encrypted or not.  The only exception to this would be one letter words as there is no distance between letters to calculate.
+
+Example:
+<img src="https://github.com/gravity226/Cryptography/blob/master/Caesar_Cipher_Encryption/imgs/distance_example.jpg" height="400" />
+
+```python
+import string
+
+# The input for this method is a word.  ex: w = 'the'
+def dist(w):
+    # create a list of letters that might be seen in a given word
+    letters = dict(zip(string.uppercase[:26], range(1,27)) +
+                   zip(string.lowercase[:26], range(1,27)) + [["'", 27], ['-', 28], ['/', 29]])
+
+    # check the length of the word.  one letter words will be calculated differently
+    if len(w) == 1:
+        return letters[w]
+    else:
+        count = 0
+        for x in xrange(len(w) - 1):
+            # check that you're looking at a letter and nothing else
+            if x == "'":
+                count += 0
+            elif letters[w[x]] > letters[w[x+1]]:
+                count += (26 - letters[w[x]]) + letters[w[x+1]]
+            else:
+                count +=  abs(letters[w[x]] - letters[w[x+1]])
+        return count
+```
+
+##### Decryption
