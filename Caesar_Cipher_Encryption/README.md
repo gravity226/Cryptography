@@ -200,3 +200,46 @@ def km_clusters():
 ```
 
 ##### Decryption
+Now it's time to decrypt a message that has been encrypted by a Caesar Cipher.
+
+```python
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.externals import joblib
+
+def naive_predictions(df):
+    from Caesar_Cipher_Encryption.c_cipher import encrypt
+
+    model = joblib.load('kmeans_model.pkl')
+    labels = list(model.labels_)
+
+    # to encrypt
+    s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    encrypted_s = encrypt(s, 3)
+
+    words = [ [len(word), dist(word)] for word in encrypted_s.split() ]
+    preds = model.predict(words)
+
+    predicted_sentence = [ df.Word.ix[labels.index(n)] for n in preds ]
+
+    print "Original Sentence"
+    print s.split()
+    print
+    print "Decrypted sentence with KMeans"
+    print predicted_sentence
+
+```
+```output
+Original Sentence
+['THE', 'QUICK', 'BROWN', 'FOX', 'JUMPS', 'OVER', 'THE', 'LAZY', 'DOG']
+
+Decrypted sentence with KMeans
+['the', 'every', 'money', 'who', 'black', 'very', 'the', 'role', 'and']
+```
+
+<i>Results</i><br />
+So my first attempt wasn't great.  I'm getting about %22 accuracy on this particular sentence.  But I can improve on this.  For my next attempt I will incorporate the word frequency algorithm I made earlier.  Let's try this again.
+
+```python
+
+```

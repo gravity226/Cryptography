@@ -80,8 +80,28 @@ def km_clusters():
     model.fit_transform(X)
     return model
 
-def predict_encrypted():
+def naive_predictions(df):
+    from Caesar_Cipher_Encryption.c_cipher import encrypt
+
     model = joblib.load('kmeans_model.pkl')
+    labels = list(model.labels_)
+
+    # to encrypt
+    s = 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    encrypted_s = encrypt(s, 3)
+
+    words = [ [len(word), dist(word)] for word in encrypted_s.split() ]
+    preds = model.predict(words)
+
+    predicted_sentence = [ df.Word.ix[labels.index(n)] for n in preds ]
+
+    print "Original Sentence"
+    print s.split()
+    print
+    print "Decrypted sentence with KMeans"
+    print predicted_sentence
+
+
 
 if __name__ == '__main__':
     # ----  Load and Clean data  ----
