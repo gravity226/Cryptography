@@ -67,7 +67,7 @@ def word_frequency(s):
 ##### Letter Distance
 In order to decrypt this I had the idea to create a distance metric for every word.  This metric would look at the distance between letters in a word.  When you think about it, the distance between letters in a word would be the same whether that word is encrypted or not.  The only exception to this would be one letter words as there is no distance between letters to calculate.
 
-Example:<br />
+<i>Example:</i><br />
 <img src="https://github.com/gravity226/Cryptography/blob/master/Caesar_Cipher_Encryption/imgs/distance_example.jpg" height="200" />
 
 ```python
