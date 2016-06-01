@@ -5,6 +5,7 @@ For this little project I want to learn more about Decryption.  Encrypting and D
 
 ### Contents
  - [Caesar Cipher](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption)
+ - Vigenère Cipher
 
 ### Special Thanks
  - [www.wordfrequency.info](http://www.wordfrequency.info) is providing a free list of the top 5000 words used with their ranks.  
