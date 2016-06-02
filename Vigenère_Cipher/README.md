@@ -33,7 +33,7 @@ def encrypt(text, key='TOMMY'):
 ```
 
 ##### Letter Frequency
-Like the Caesar Cipher, letter frequency could be a helpful tool in decrypting the message.
+Lets take a look at the letter frequency again like we did with the Caesar Cipher.
 
 ``` python
 import matplotlib.pyplot as plt
