@@ -81,3 +81,10 @@ def coincidences(encrypted_text):
 ```
 
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length_pattern.png" height="400" />
+
+Looking at this we can already start to see a pattern from just the first 40 characters in the encrypted text.  The idea here is the the distance between the spikes is also the length of the key that is being used.
+
+```python
+def find_key_length(encrypted_text):
+    pattern = coincidences(encrypted_text)
+```
