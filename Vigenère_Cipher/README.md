@@ -52,6 +52,8 @@ def letter_frequency(sup, s):
 
 Original Text Letter Frequency<br />
 
-
+<img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/original_message.png" height="400" />
 
 Encrypted Text Letter Frequency<br />
+
+<img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/encrypted_message.png" height="400" />
