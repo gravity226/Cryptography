@@ -84,7 +84,7 @@ def coincidences(encrypted_text):
 
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length_pattern.png" height="400" />
 
-Looking at this we can already start to see a pattern from just the first 40 characters in the encrypted text.  The idea here is the distance between the spikes is also the length of the key that is being used.
+Looking at this we can already start to see a pattern from just the first 40 characters in the encrypted text.  The idea here is to look at the distance between the spikes and that should also be the length of the key that is being used.
 
 ```python
 def find_key_length(encrypted_text):
@@ -108,3 +108,5 @@ def find_key_length(encrypted_text):
 ```
 
 Thanks to this nifty little library called Counter we can see what the most common numbers are and how often they appear.  At the top is the number 5 with 54 total peaks in our encrypted message.  So from here we can assume that the length of the key is 5.  Now we need to figure out the key itself.  
+
+<img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length.png" height="400" />
