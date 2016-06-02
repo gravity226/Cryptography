@@ -89,4 +89,22 @@ Looking at this we can already start to see a pattern from just the first 40 cha
 ```python
 def find_key_length(encrypted_text):
     pattern = coincidences(encrypted_text)
+
+    distances = []
+    last = 0
+    for x in xrange(1, len(pattern)-1):
+        if pattern[x] > pattern[x-1] and pattern[x] > pattern[x+1]:
+            distances.append(x - last)
+            last = x
+
+    plt.plot(distances)
+    plt.savefig('key_length.png')
+    plt.show()
+
+    print Counter(distances).most_common(5)
 ```
+```output
+[(5, 54), (3, 27), (2, 26), (4, 11), (6, 5)]
+```
+
+Thanks to this nifty little library called Counter we can see what the most common numbers are and how often they appear.  At the top is the number 5 with 54 total peaks in our encrypted message.  So from here we can assume that the length of the key is 5.  Now we need to figure out the key itself.  

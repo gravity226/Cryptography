@@ -1,6 +1,7 @@
 import string
 import matplotlib.pyplot as plt
 import numpy as np
+from collections import Counter
 
 # Globals
 
@@ -45,14 +46,27 @@ def coincidences(encrypted_text):
                 count += 1
         pattern.append(count)
 
-    plt.plot(pattern[:40])
-    plt.savefig('key_length_pattern.png')
-    plt.show()
+    # plt.plot(pattern[:40])
+    # plt.savefig('key_length_pattern.png')
+    # plt.show()
 
     return pattern
 
 def find_key_length(encrypted_text):
     pattern = coincidences(encrypted_text)
+
+    distances = []
+    last = 0
+    for x in xrange(1, len(pattern)-1):
+        if pattern[x] > pattern[x-1] and pattern[x] > pattern[x+1]:
+            distances.append(x - last)
+            last = x
+
+    plt.plot(distances)
+    # plt.savefig('key_length.png')
+    plt.show()
+
+    print Counter(distances).most_common(5)
 
 
 # Main
@@ -66,8 +80,8 @@ if __name__ == '__main__':
 
     sup = 'Letter Frequency'
     # letter_frequency(sup, text)
-
-    coincidences(encrypted_text)
+    # coincidences(encrypted_text)
+    find_key_length(encrypted_text)
 
 
 
