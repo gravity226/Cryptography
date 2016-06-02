@@ -65,6 +65,8 @@ So this is nice but it's a lot harder to interpret when compared to the Caesar C
 ##### Find the Key Length
 In order to find our key length we need to find coincidences in our encrypted text. [Reference](https://www.youtube.com/watch?v=LaWp_Kq0cKs)
 
+Finding coincidences is the process of shifting letters over by one space, counting the number of letters that are the same, and then repeating the process until the end.  See the reference for a better explanation.  :)
+
 ```python
 def coincidences(encrypted_text):
     pattern = []
@@ -82,7 +84,7 @@ def coincidences(encrypted_text):
 
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length_pattern.png" height="400" />
 
-Looking at this we can already start to see a pattern from just the first 40 characters in the encrypted text.  The idea here is the the distance between the spikes is also the length of the key that is being used.
+Looking at this we can already start to see a pattern from just the first 40 characters in the encrypted text.  The idea here is the distance between the spikes is also the length of the key that is being used.
 
 ```python
 def find_key_length(encrypted_text):
