@@ -109,4 +109,6 @@ def find_key_length(encrypted_text):
 
 Thanks to this nifty little library called Counter we can see what the most common numbers are and how often they appear.  At the top is the number 5 with 54 total peaks in our encrypted message.  So from here we can assume that the length of the key is 5.  Now we need to figure out the key itself.  
 
+Here is a quick visual of the height of all of the peaks in our data.
+
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length.png" height="400" />
