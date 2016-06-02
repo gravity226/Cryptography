@@ -5,8 +5,8 @@ With Python 2.7
 The Vigenère Cipher was developed by mathematician Blaise de Vigenère in the 16th century. The Vigenère Cipher was adapted as a twist on the standard Caesar cipher to reduce the effectiveness of performing frequency analysis on the ciphertext. The cipher accomplishes this using uses a text string (for example, a word) as a key, which is then used for doing a number of alphabet shifts on the plaintext. Similar to the Caesar Cipher, but instead of performing a single alphabet shift across the entire plaintext, the Vigenère cipher uses a key to determine several different shift amounts across the entirety of the message. [Reference](https://learncryptography.com/classical-encryption/vigenere-cipher)  
 
 ### Contents
- - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#encryption)
- - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Caesar_Cipher_Encryption#letter-frequency)
+ - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#encryption)
+ - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#letter-frequency)
 
 ##### Encryption
 ``` python
@@ -57,3 +57,13 @@ Original Text Letter Frequency<br />
 Encrypted Text Letter Frequency<br />
 
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/encrypted_message.png" height="400" />
+
+<i>Results</i><br />
+So this is nice but it's a lot harder to interpret when compared to the Caesar Cipher letter frequency.
+
+##### Find the Key Length
+In order to find our key length we need to find coincidences in our encrypted text. [Reference](https://www.youtube.com/watch?v=LaWp_Kq0cKs)
+
+```python
+
+```
