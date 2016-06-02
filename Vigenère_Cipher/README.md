@@ -112,3 +112,6 @@ Thanks to this nifty little library called Counter we can see what the most comm
 Here is a quick visual of the height of all of the peaks in our data.
 
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length.png" height="400" />
+
+##### Finding the Key
+More mathy stuff :)
