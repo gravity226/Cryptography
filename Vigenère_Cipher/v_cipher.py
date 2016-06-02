@@ -36,6 +36,24 @@ def letter_frequency(sup, s):
     plt.savefig('original_message.png')
     plt.show()
 
+def coincidences(encrypted_text):
+    pattern = []
+    for a in xrange(1, len(encrypted_text)):
+        count = 0
+        for b, c in zip(encrypted_text[a:], encrypted_text[:-a]):
+            if b == c:
+                count += 1
+        pattern.append(count)
+
+    plt.plot(pattern[:40])
+    plt.savefig('key_length_pattern.png')
+    plt.show()
+
+    return pattern
+
+def find_key_length(encrypted_text):
+    pattern = coincidences(encrypted_text)
+
 
 # Main
 
@@ -47,7 +65,9 @@ if __name__ == '__main__':
     encrypted_text = encrypt(text=text)
 
     sup = 'Letter Frequency'
-    letter_frequency(sup, text)
+    # letter_frequency(sup, text)
+
+    coincidences(encrypted_text)
 
 
 

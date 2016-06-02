@@ -7,6 +7,7 @@ The Vigenère Cipher was developed by mathematician Blaise de Vigenère in the 1
 ### Contents
  - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#encryption)
  - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#letter-frequency)
+ - [Find the Key Length](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#find-the-key-length)
 
 ##### Encryption
 ``` python
@@ -65,5 +66,18 @@ So this is nice but it's a lot harder to interpret when compared to the Caesar C
 In order to find our key length we need to find coincidences in our encrypted text. [Reference](https://www.youtube.com/watch?v=LaWp_Kq0cKs)
 
 ```python
+def coincidences(encrypted_text):
+    pattern = []
+    for a in xrange(1, len(encrypted_text)):
+        count = 0
+        for b, c in zip(encrypted_text[a:], encrypted_text[:-a]):
+            if b == c:
+                count += 1
+        pattern.append(count)
 
+    plt.plot(pattern[:40])
+    plt.savefig('key_length_pattern.png')
+    plt.show()
 ```
+
+<img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length_pattern.png" height="400" />
