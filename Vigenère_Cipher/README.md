@@ -8,7 +8,7 @@ The Vigenère Cipher was developed by mathematician Blaise de Vigenère in the 1
  - [Encryption](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#encryption)
  - [Letter Frequency](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#letter-frequency)
  - [Find the Key Length](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#find-the-key-length)
- - [Finding the Key](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#finding-the-key)
+ - [Find the Key](https://github.com/gravity226/Cryptography/tree/master/Vigenère_Cipher#find-the-key)
 
 ##### Encryption
 ``` python
@@ -114,5 +114,5 @@ Here is a quick visual of the height of all of the peaks in our data.
 
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length.png" height="400" />
 
-##### Finding the Key
+##### Find the Key
 More mathy stuff :)
