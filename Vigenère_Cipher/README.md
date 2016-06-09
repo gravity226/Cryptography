@@ -115,4 +115,34 @@ Here is a quick visual of the height of all of the peaks in our data.
 <img src="https://github.com/gravity226/Cryptography/blob/master/Vigenère_Cipher/imgs/key_length.png" height="400" />
 
 ##### Find the Key
-More mathy stuff :)
+The first two things we need to look at are the letter frequencies in both the encrypted text and in the English language in general.  I found letter and character frequencies in the English lanuage from [My character frequency statistics](http://fitaly.com/board/domper3/posts/136.html) by John Harms.
+
+Encrypted text letter frequency:
+```python
+def get_encrypted_freq(encrypted_text):
+    uniques = {}
+    for a in set(encrypted_text):
+        uniques[a] = encrypted_text.count(a) / len(encrypted_text)
+
+    return uniques
+```
+
+English language character frequency:
+```python
+def get_char_freq():
+    with open("characters.txt") as f:
+        data = {}
+        for line in f:
+            x = line.split()
+            print line
+            data[x[1]] = float(x[-1].replace('%)', '').replace('\n', '').replace('(', '')) * .01
+
+    freqs = {}
+    for a, b in zip(string.uppercase[:26], string.lowercase[:26]):
+        freqs[a] = data[a] + data[b]
+
+    for c in "!@#$%^&*()_+-=,./<>?'1234567890":
+        freqs[c] = data[c]
+
+    return freqs
+```

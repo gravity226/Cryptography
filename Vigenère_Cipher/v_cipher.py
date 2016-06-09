@@ -1,3 +1,5 @@
+from __future__ import division
+
 import string
 import matplotlib.pyplot as plt
 import numpy as np
@@ -68,6 +70,30 @@ def find_key_length(encrypted_text):
 
     print Counter(distances).most_common(5)
 
+def get_char_freq():
+    with open("characters.txt") as f:
+        data = {}
+        for line in f:
+            x = line.split()
+            print line
+            data[x[1]] = float(x[-1].replace('%)', '').replace('\n', '').replace('(', '')) * .01
+
+    freqs = {}
+    for a, b in zip(string.uppercase[:26], string.lowercase[:26]):
+        freqs[a] = data[a] + data[b]
+
+    for c in "!@#$%^&*()_+-=,./<>?'1234567890":
+        freqs[c] = data[c]
+
+    return freqs
+
+def get_encrypted_freq(encrypted_text):
+    uniques = {}
+    for a in set(encrypted_text):
+        uniques[a] = encrypted_text.count(a) / len(encrypted_text)
+
+    return uniques
+
 
 # Main
 
@@ -82,6 +108,7 @@ if __name__ == '__main__':
     # letter_frequency(sup, text)
     # coincidences(encrypted_text)
     find_key_length(encrypted_text)
+    uniques = get_encrypted_freq(encrypted_text)
 
 
 
